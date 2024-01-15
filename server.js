@@ -23,3 +23,14 @@ app.get('/api/getSavedMovies', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+app.post('/api/deleteMovie', (req, res) => {
+  const { index } = req.body;
+
+  if (index !== undefined && savedMovies[index]) {
+    savedMovies.splice(index, 1);
+    res.json({ success: true });
+  } else {
+    res.json({ success: false, error: 'Invalid index' });
+  }
+});

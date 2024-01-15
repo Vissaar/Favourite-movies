@@ -1,8 +1,11 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0;
+  background: linear-gradient(to right, #16222A, #3A6073);
+  color: #fff;
 }
 
 .App {
@@ -10,19 +13,23 @@ body {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #1E272E;
   padding: 20px;
-  color: white;
 }
 
 .movie-search {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .movie-search input {
   padding: 10px;
   font-size: 16px;
   width: 200px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .movie-search button {
@@ -31,39 +38,71 @@ body {
   background-color: #61dafb;
   color: white;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.sections {
+  display: flex;
+  justify-content: space-between;
 }
 
 .recommendations,
 .saved-movies {
-  width: 40%;
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 10px;
+  width: 48%;
   box-sizing: border-box;
+}
+
+.saved-movies {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   color: #61dafb;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-li {
-  margin-bottom: 10px;
+.card {
+  width: 150px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
-button {
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: #61dafb;
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-button {
+  background-color: #ea384d;
   color: white;
-  cursor: pointer;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+  transition: background-color 0.3s ease-in-out;
 }
 
-button:hover {
-  background-color: #4fa3d1;
+.delete-button:hover {
+  background-color: #c9302c;
 }

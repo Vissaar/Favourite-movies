@@ -16,11 +16,10 @@ const App = () => {
 
   const searchMovie = async () => {
     try {
-      // Fetch movie recommendations from the OMDb API
+      // Fetch detailed movie recommendations from the OMDb API
       const response = await axios.get(`http://www.omdbapi.com/?s=${movie}&apikey=99c8e8d7`);
       if (response.data.Search) {
-        const movieRecommendations = response.data.Search.map(movie => movie.Title);
-        setRecommendations(movieRecommendations);
+        setRecommendations(response.data.Search);
       } else {
         setRecommendations([]);
       }
@@ -31,7 +30,7 @@ const App = () => {
 
   const saveMovie = (movie) => {
     // Save the selected movie to the backend
-    axios.post('http://localhost:5000/api/saveMovie', { movie })
+    axios.post('http://localhost:5000/api/saveMovie', { movie: movie.Title })
       .then(response => {
         if (response.data.success) {
           setSavedMovies([...savedMovies, movie]);
@@ -40,10 +39,23 @@ const App = () => {
       .catch(error => console.error('Error saving movie:', error));
   };
 
+  const deleteMovie = (index) => {
+    // Delete the selected movie from the backend
+    axios.post('http://localhost:5000/api/deleteMovie', { index })
+      .then(response => {
+        if (response.data.success) {
+          const updatedSavedMovies = [...savedMovies];
+          updatedSavedMovies.splice(index, 1);
+          setSavedMovies(updatedSavedMovies);
+        }
+      })
+      .catch(error => console.error('Error deleting movie:', error));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Favourite movies App</h1>
+        <h1>Cool Movie Recommendation App</h1>
         <div className="movie-search">
           <input
             type="text"
@@ -53,24 +65,35 @@ const App = () => {
           />
           <button onClick={searchMovie}>Search</button>
         </div>
-        <div className="recommendations">
-          <h2>Movie Recommendations</h2>
-          <ul>
-            {recommendations.map((recommendation, index) => (
-              <li key={index}>
-                {recommendation}
-                <button onClick={() => saveMovie(recommendation)}>Save</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="saved-movies">
-          <h2>Saved Movies</h2>
-          <ul>
-            {savedMovies.map((savedMovie, index) => (
-              <li key={index}>{savedMovie}</li>
-            ))}
-          </ul>
+        <div className="sections">
+          <div className="recommendations">
+            <h2>Movie Recommendations</h2>
+            <div className="cards-container">
+              {recommendations.map((recommendation, index) => (
+                <div key={index} className="card">
+                  <img src={recommendation.Poster} className="card-img-top" alt={recommendation.Title} />
+                  <div className="card-body">
+                    <h5 className="card-title">{recommendation.Title}</h5>
+                    <button onClick={() => saveMovie(recommendation)}>Save</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="saved-movies">
+            <h2>Saved Movies</h2>
+            <div className="cards-container">
+              {savedMovies.map((savedMovie, index) => (
+                <div key={index} className="card">
+                  <img src={savedMovie.Poster || 'path-to-default-image.jpg'} className="card-img-top" alt={savedMovie.Title} />
+                  <div className="card-body">
+                    <h5 className="card-title">{savedMovie.Title}</h5>
+                    <button className="delete-button" onClick={() => deleteMovie(index)}>Delete</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </header>
     </div>
