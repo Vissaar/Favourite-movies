@@ -106,3 +106,18 @@ h2 {
 .delete-button:hover {
   background-color: #c9302c;
 }
+
+.save-button {
+  background-color: #5cea38;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.save-button:hover {
+  background-color: #3cc92c;
+}

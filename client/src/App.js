@@ -74,7 +74,7 @@ const App = () => {
                   <img src={recommendation.Poster} className="card-img-top" alt={recommendation.Title} />
                   <div className="card-body">
                     <h5 className="card-title">{recommendation.Title}</h5>
-                    <button onClick={() => saveMovie(recommendation)}>Save</button>
+                    <button className="save-button" onClick={() => saveMovie(recommendation)}>Save</button>
                   </div>
                 </div>
               ))}
