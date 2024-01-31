@@ -29,14 +29,22 @@ const App = () => {
   };
 
   const saveMovie = (movie) => {
-    // Save the selected movie to the backend
-    axios.post('http://localhost:5000/api/saveMovie', { movie: movie.Title })
-      .then(response => {
-        if (response.data.success) {
-          setSavedMovies([...savedMovies, movie]);
-        }
-      })
-      .catch(error => console.error('Error saving movie:', error));
+    // Check if the movie is already saved
+    const isMovieAlreadySaved = savedMovies.some(savedMovie => savedMovie.imdbID === movie.imdbID);
+  
+    if (!isMovieAlreadySaved) {
+      // Save the selected movie to the backend
+      axios.post('http://localhost:5000/api/saveMovie', { movie: movie.Title })
+        .then(response => {
+          if (response.data.success) {
+            setSavedMovies([...savedMovies, movie]);
+          }
+        })
+        .catch(error => console.error('Error saving movie:', error));
+    } else {
+      // Movie is already saved, you can show a message or handle it as needed
+      console.log('Movie is already saved.');
+    }
   };
 
   const deleteMovie = (index) => {
